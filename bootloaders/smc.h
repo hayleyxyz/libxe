@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#ifndef LIBXE_SMC_H
-#define LIBXE_SMC_H
+#pragma once
 
 #include "../io/stream.h"
 
@@ -23,5 +22,3 @@ public:
 
 };
 };
-
-#endif //LIBXE_SMC_H

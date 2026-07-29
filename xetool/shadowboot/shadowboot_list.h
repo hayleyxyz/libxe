@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#ifndef LIBXE_SHADOWBOOT_LIST_H
-#define LIBXE_SHADOWBOOT_LIST_H
+#pragma once
 
 #include "../command.h"
 
@@ -19,6 +18,3 @@ public:
 
 };
 };
-
-
-#endif //LIBXE_SHADOWBOOT_LIST_H

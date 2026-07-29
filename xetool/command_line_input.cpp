@@ -1,5 +1,5 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
 #include <string>

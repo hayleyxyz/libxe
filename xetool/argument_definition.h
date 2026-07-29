@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#ifndef LIBXE_INPUT_ARGUMENT_H
-#define LIBXE_INPUT_ARGUMENT_H
+#pragma once
 
 namespace xetool {
 
@@ -19,5 +18,3 @@ public:
 };
 
 };
-
-#endif //LIBXE_INPUT_ARGUMENT_H

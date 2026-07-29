@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#ifndef LIBXE_APPLICATION_H
-#define LIBXE_APPLICATION_H
+#pragma once
 
 #include <vector>
 #include "module.h"
@@ -18,5 +17,3 @@ public:
 };
 
 }
-
-#endif //LIBXE_APPLICATION_H

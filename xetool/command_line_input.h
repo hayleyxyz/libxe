@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#ifndef LIBXE_COMMANDLINEINPUT_H
-#define LIBXE_COMMANDLINEINPUT_H
+#pragma once
 
 #include <map>
 #include <vector>
@@ -31,5 +30,3 @@ protected:
 };
 
 };
-
-#endif //LIBXE_COMMANDLINEINPUT_H

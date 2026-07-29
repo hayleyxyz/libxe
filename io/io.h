@@ -1,9 +1,8 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
-#ifndef LIBXENON_FILE_H
-#define LIBXENON_FILE_H
+#pragma once
 
 #include "../types.h"
 #include <string>
@@ -18,5 +17,3 @@ bool isDirectory(std::string &path);
 
 };
 };
-
-#endif //LIBXENON_FILE_H

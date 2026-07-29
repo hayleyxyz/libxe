@@ -1,9 +1,8 @@
 //
-// Created by yuikonnu on 30/10/2018.
+// Created by github.com/hayleyxyz on 30/10/2018.
 //
 
-#ifndef LIBXENON_PAGE_H
-#define LIBXENON_PAGE_H
+#pragma once
 
 #include "../io/file_stream.h"
 #include "../types.h"
@@ -25,5 +24,3 @@ public:
 
 }
 }
-
-#endif //LIBXENON_PAGE_HP

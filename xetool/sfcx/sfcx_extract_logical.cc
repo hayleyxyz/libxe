@@ -1,5 +1,5 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
 #include <iostream>
@@ -7,7 +7,7 @@
 #include <io/file_stream.h>
 #include <sfcx/sfcx_image.h>
 #include <sfcx/logical_stream.h>
-#include "extract_logical.h"
+#include "sfcx_extract_logical.h"
 
 namespace xetool {
 namespace sfcx {
@@ -30,7 +30,7 @@ int ExtractLogical::execute(CommandLineInput &input) {
     }
 
     xe::io::FileStream nand;
-    nand.open(inputPath, std::ios_base::in | std::ios_base::binary);
+    nand.open(inputPath, std::ios::in | std::ios::binary);
     if (!nand.isOpen()) return 0;
 
     xe::sfcx::SfcxImage image(nand);
@@ -38,10 +38,10 @@ int ExtractLogical::execute(CommandLineInput &input) {
     xe::sfcx::LogicalStream lstream(image);
 
 
-    lstream.seek(0, xe::io::Stream::seekdir::beg);
+    lstream.seek(0, std::ios::beg);
 
     uint8_t *buf = new uint8_t[lstream.length()];
-    lstream.seek(0, xe::sfcx::LogicalStream::beg);
+    lstream.seek(0, std::ios::beg);
     lstream.read(buf, lstream.length());
 
     xe::io::writeAllBytes(outputPath, buf, lstream.length());

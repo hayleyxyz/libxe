@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#ifndef LIBXE_MEMORY_STREAM_H
-#define LIBXE_MEMORY_STREAM_H
+#pragma once
 
 #include "stream.h"
 
@@ -18,15 +17,15 @@ public:
     void close();
     bool isOpen();
     size_t length();
-    off_t position();
-    off_t seek(off_t pos, seekdir dir);
+    size_t position();
+    size_t seek(size_t pos, std::ios_base::seekdir dir);
     size_t read(uint8_t *buf, size_t length);
     size_t write(uint8_t *input, size_t length);
 
 protected:
     uint8_t *buf = nullptr;
     size_t buflength = 0;
-    off_t bufptr = 0;
+    size_t bufptr = 0;
 
     void allocateBuffer(size_t size);
 
@@ -39,5 +38,3 @@ protected:
 
 };
 };
-
-#endif //LIBXE_MEMORY_STREAM_H

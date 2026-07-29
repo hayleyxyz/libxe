@@ -1,10 +1,11 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
 #include <cstring>
 #include <cassert>
 #include "memory_stream.h"
+
 
 xe::io::MemoryStream::MemoryStream(size_t initialSize) {
     allocateBuffer(initialSize);
@@ -35,22 +36,22 @@ size_t xe::io::MemoryStream::length() {
     return buflength;
 }
 
-off_t xe::io::MemoryStream::position() {
+size_t xe::io::MemoryStream::position() {
     return bufptr;
 }
 
-off_t xe::io::MemoryStream::seek(off_t pos, xe::io::Stream::seekdir dir) {
+size_t xe::io::MemoryStream::seek(size_t pos, std::ios_base::seekdir dir) {
     switch(dir) {
-        case beg:
-            assert(pos < buflength);
+        case std::ios::beg:
+            assert(pos <= buflength);
             bufptr = pos;
             break;
-        case cur:
-            assert(bufptr + pos < buflength);
+        case std::ios::cur:
+            assert(bufptr + pos <= buflength);
             bufptr += pos;
             break;
-        case end:
-            assert(buflength + pos < buflength);
+        case std::ios::end:
+            assert(buflength + pos <= buflength);
             bufptr = buflength + pos;
             break;
         default:

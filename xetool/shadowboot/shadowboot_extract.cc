@@ -1,15 +1,14 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#include "extract.h"
+#include "shadowboot_extract.h"
 #include <io/io.h>
 #include <io/file_stream.h>
 #include <iostream>
 #include <rom/shadow_boot_rom.h>
 #include <crypto/keys.h>
 #include <sstream>
-#include <crypto/hmac_sha.h>
 
 namespace xetool {
 namespace shadowboot {
@@ -96,18 +95,16 @@ int Extract::execute(CommandLineInput &input) {
     se->write(bootloaderStream);
     bootloaderStream.close();
 
-#if 0
     auto kernelPath = outputPath + "/" + "xboxkrnl.exe";
     bootloaderStream.open(kernelPath, std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
     if(!bootloaderStream.isOpen()) {
         std::cerr << "Failed to open bootloader output: " << kernelPath << std::endl;
-        return false;
+        return 1;
     }
 
     se->writeKernel(bootloaderStream, blkey);
 
     bootloaderStream.close();
-#endif
 
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
 
@@ -55,13 +55,13 @@ void SfcxImage::readLogicalMap() {
     std::map<int, int> reserveMap;
 
     // Seek to reserve area
-    stream.seek(pagesCount * pageTotalSize, xe::io::FileStream::beg);
+    stream.seek(pagesCount * pageTotalSize, std::ios::beg);
 
     for(int i = 0; i < reservePagesCount; i++) {
         int physicalPage = pagesCount + i;
 
         // Seek past the data
-        stream.seek(pageDataSize, xe::io::FileStream::cur);
+        stream.seek(pageDataSize, std::ios::cur);
 
         // Parse the page meta
         Page page(i);
@@ -77,17 +77,17 @@ void SfcxImage::readLogicalMap() {
     }
 
     // Reset to start
-    stream.seek(0, xe::io::FileStream::beg);
+    stream.seek(0, std::ios::beg);
 
     int logicalPage = 0;
 
     for(int i = 0; i < pagesCount; i++) {
         int physicalPage = i;
 
-        off_t pos = stream.position();
+        size_t pos = stream.position();
 
         // Seek past the data
-        stream.seek(pageDataSize, xe::io::FileStream::cur);
+        stream.seek(pageDataSize, std::ios::cur);
 
         // Parse the page meta
         Page page(i);
@@ -158,10 +158,10 @@ size_t SfcxImage::physicalLength() {
 
 void SfcxImage::readBootLoaders() {
     LogicalStream logicalStream(*this);
-    logicalStream.seek(0x8, xe::io::Stream::beg);
+    logicalStream.seek(0x8, std::ios::beg);
 
     auto bloffset = logicalStream.readIntBE<uint32_t>();
-    logicalStream.seek(bloffset, xe::io::Stream::beg);
+    logicalStream.seek(bloffset, std::ios::beg);
 
     for(int i = 0; i < 4; ++i) {
         auto bl = new xe::bootloaders::Bootloader();

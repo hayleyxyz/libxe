@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#ifndef LIBXE_COMMAND_H
-#define LIBXE_COMMAND_H
+#pragma once
 
 #include <vector>
 #include "argument_definition.h"
@@ -23,5 +22,3 @@ public:
 };
 
 };
-
-#endif //LIBXE_COMMAND_H

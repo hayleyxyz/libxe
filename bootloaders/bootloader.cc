@@ -1,14 +1,13 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
+#include <iostream>
+#include <cassert>
 #include "bootloader.h"
 #include "../io/memory_stream.h"
-#include <cryptopp/hmac.h>
-#include <cryptopp/sha.h>
-#include <cryptopp/arc4.h>
-
-#include "../compression/lzx.c"
+#include <excrypt.h>
+#include "../compression/xcompress_lzx.h"
 
 namespace xe {
 namespace bootloaders {
@@ -50,18 +49,18 @@ void Bootloader::writeDecrypted(xe::io::Stream &output, const uint8_t *key, uint
     writeHeader(output);
 
     // HMAC-SHA the salt in the header, using the input key (from the previous bootloader or CPU ROM key)
-    CryptoPP::HMAC<CryptoPP::SHA1> hmac(key, 0x10);
-    uint8_t digest[0x10];
-    hmac.Update(salt, 0x10);
-    hmac.TruncatedFinal(digest, 0x10);
+    EXCRYPT_HMACSHA_STATE state{ 0 };
+    uint8_t digest[0x10]{ 0 };
 
-    // Resulting hash is used for decryption
-    CryptoPP::ARC4 arc4;
-    arc4.SetKey(digest, 0x10);
+    ExCryptHmacShaInit(&state, key, 0x10);
+    ExCryptHmacShaUpdate(&state, salt, 0x10);
+    ExCryptHmacShaFinal(&state, digest, 0x10);
 
     // RC4 decrypt the body of the bootloader
     auto decrypted = new uint8_t[length - 0x20];
-    arc4.ProcessString(&decrypted[0], &data[0], length - 0x20);
+    memcpy(decrypted, &data[0], length - 0x20);
+    ExCryptRc4(digest, 0x10, &decrypted[0], length - 0x20);
+
     output.write(decrypted, length - 0x20);
     delete[](decrypted);
 
@@ -75,22 +74,27 @@ void Bootloader::writeKernel(xe::io::Stream &output, const uint8_t *key) {
     xe::io::MemoryStream decrypted;
     writeDecrypted(decrypted, key);
 
-    decrypted.seek(0x30, xe::io::Stream::beg);
+    decrypted.seek(0x30, std::ios::beg);
 
     size_t totalCompressedSize = 0, totalUncompressedSize = 0;
-    int i = 1;
-    int num = 78;
+    int num = this->length - 0x30;
 
-    while(--num > 0) {
+    int i = 0;
+
+    while(decrypted.position() < decrypted.length()) {
         auto compressedSize = decrypted.readIntBE<uint16_t>();
         auto uncompressedSize = decrypted.readIntBE<uint16_t>();
+
+        num -= 4;
 
         totalCompressedSize += compressedSize;
         totalUncompressedSize += uncompressedSize;
 
-        decrypted.seek(compressedSize, xe::io::Stream::cur);
+        decrypted.seek(compressedSize, std::ios::cur);
 
-        std::cout << decrypted.position() << std::endl;
+        num -= compressedSize;
+
+        std::cout << std::hex << decrypted.position() << std::endl;
 
         if(uncompressedSize != 0x8000) {
             break;
@@ -103,21 +107,26 @@ void Bootloader::writeKernel(xe::io::Stream &output, const uint8_t *key) {
     auto dst = new uint8_t[totalUncompressedSize];
     auto dst_p = dst;
 
-    decrypted.seek(0x30, xe::io::Stream::beg);
+    decrypted.seek(0x30, std::ios::beg);
 
     auto bytesRead = 0;
 
-    LZXinit(15);
+    xlzx_params lzxParams{ 0 };
+    lzxParams.window_size = XLZX_WINDOW_SIZE_DEFAULT;
+
+    auto decoder = xlzx_decoder_create(&lzxParams);
 
     while(true) {
         auto compressedSize = decrypted.readIntBE<uint16_t>();
         auto uncompressedSize = decrypted.readIntBE<uint16_t>();
+        size_t actualUncompressedSize = 0;
 
         decrypted.read(&src[bytesRead], compressedSize);
 
-        LZXdecompress(&src[bytesRead], dst_p, compressedSize, uncompressedSize);
+        auto lzxResult = xlzx_decoder_decompress(decoder, &src[bytesRead], compressedSize, dst_p, uncompressedSize, &actualUncompressedSize);
 
-        //auto r = lzx_decompressor_ops.decompress(&src[bytesRead], compressedSize, dst_p, uncompressedSize, ptr);
+        assert(lzxResult == XLZX_OK);
+
         output.write(dst_p, uncompressedSize);
         dst_p += uncompressedSize;
 

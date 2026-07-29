@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#ifndef LIBXE_MODULE_H
-#define LIBXE_MODULE_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -22,5 +21,3 @@ public:
 };
 
 };
-
-#endif //LIBXE_MODULE_HM

@@ -1,5 +1,5 @@
 //
-// Created by yuikonnu on 30/10/2018.
+// Created by github.com/hayleyxyz on 30/10/2018.
 //
 
 #include "logical_stream.h"
@@ -19,30 +19,30 @@ size_t LogicalStream::length() {
     return image.logicalLength();
 }
 
-off_t LogicalStream::position() {
+size_t LogicalStream::position() {
     return image.physicalToLogicalAddress(image.innerStream().position());
 }
 
-off_t LogicalStream::seek(off_t pos, io::Stream::seekdir dir) {
-    off_t newpos = 0;
+size_t LogicalStream::seek(size_t pos, std::ios_base::seekdir dir) {
+    size_t newpos = 0;
 
     switch(dir) {
-        case beg:
+        case std::ios::beg:
             newpos = pos;
             break;
 
-        case cur:
+        case std::ios::cur:
             newpos = position() + pos;
             break;
 
-        case end:
+        case std::ios::end:
             newpos = length() + pos;
             break;
     }
 
     return image.innerStream().seek(
             image.logicalToPhysicalAddress(newpos),
-            io::Stream::beg
+            std::ios::beg
     );
 }
 
@@ -56,7 +56,7 @@ size_t LogicalStream::read(uint8_t *buf, size_t length) {
 
         if(bytesRemainingInPhysicalBlock <= image.pageMetaSize) {
             // We're up against, or inside the "meta" section, so skip past it
-            image.innerStream().seek(bytesRemainingInPhysicalBlock, xe::io::Stream::cur);
+            image.innerStream().seek(bytesRemainingInPhysicalBlock, std::ios::cur);
         }
 
         // Read each logical block at a time

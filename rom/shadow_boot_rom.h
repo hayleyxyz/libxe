@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#ifndef LIBXE_SHADOW_BOOT_ROM_H
-#define LIBXE_SHADOW_BOOT_ROM_H
+#pragma once
 
 #include "../io/stream.h"
 #include "../bootloaders/smc.h"
@@ -33,5 +32,3 @@ public:
 
 };
 };
-
-#endif //LIBXE_SHADOW_BOOT_ROM_H

@@ -1,39 +1,33 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.13)
 project(libxe)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# Put all build outputs (.exe/.dll/.lib/.pdb) for a given configuration in
+# one folder, so binaries can be run/debugged directly without manually
+# copying dependent DLLs around. On multi-config generators (Visual Studio)
+# CMake appends the per-config subdirectory (Debug/Release/...) automatically.
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 add_library(libxe SHARED
-        compression/lzx.h
-        compression/lzx.c
-        compression/lzx_int.h
-        io/file_stream.cc
-        io/file_stream.h
-        bootloaders/bootloader.cc
-        bootloaders/bootloader.h
-        endian.h
-        sfcx/sfcx_image.cc
-        sfcx/sfcx_image.h
-        io/io.cc
-        io/io.h
         types.h
-        sfcx/page.cc
-        sfcx/page.h
-        sfcx/logical_stream.cpp
-        sfcx/logical_stream.h
-        io/stream.h
-        rom/shadow_boot_rom.cc
-        rom/shadow_boot_rom.h
-        bootloaders/smc.cc
-        bootloaders/smc.h
-        io/memory_stream.cc
-        io/memory_stream.h
-        crypto/keys.h
-        crypto/keys.cc crypto/hmac_sha.cc crypto/hmac_sha.h)
+        endian.h)
+
+set_target_properties(libxe PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 target_compile_definitions(libxe PUBLIC -DDEBUG=1)
+target_compile_definitions(libxe PRIVATE LIBXE_BUILD)
 
-target_link_libraries(libxe cryptopp)
+add_subdirectory(compression)
+add_subdirectory(io)
+add_subdirectory(bootloaders)
+add_subdirectory(sfcx)
+add_subdirectory(rom)
+add_subdirectory(crypto)
+add_subdirectory(third_party/ExCrypt)
+
+target_link_libraries(libxe ExCrypt)
 add_subdirectory(xetool)
-
-target_link_libraries(libxe beecrypt)

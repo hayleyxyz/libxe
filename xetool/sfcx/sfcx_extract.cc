@@ -1,10 +1,10 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
 #include <iostream>
 #include <sstream>
-#include "extract.h"
+#include "sfcx_extract.h"
 #include "../../io/io.h"
 #include "../../sfcx/sfcx_image.h"
 #include "../../crypto/keys.h"

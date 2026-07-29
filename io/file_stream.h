@@ -1,9 +1,8 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
-#ifndef LIBXENON_FILE_STREAM_H
-#define LIBXENON_FILE_STREAM_H
+#pragma once
 
 #include <fstream>
 #include "../types.h"
@@ -17,25 +16,17 @@ public:
     FileStream();
     ~FileStream();
 
-    typedef unsigned int openmode;
-    static const openmode app    = 0x01;
-    static const openmode ate    = 0x02;
-    static const openmode binary = 0x04;
-    static const openmode in     = 0x08;
-    static const openmode out    = 0x10;
-    static const openmode trunc  = 0x20;
 
-
-    void open(const char *path, openmode mode);
-    void open(std::string &path, openmode mode) {
+    void open(const char *path, std::ios_base::openmode mode);
+    void open(std::string &path, std::ios_base::openmode mode) {
         open(path.c_str(), mode);
     };
 
     void close();
     bool isOpen();
     size_t length();
-    off_t position();
-    off_t seek(off_t pos, seekdir dir);
+    size_t position();
+    size_t seek(size_t pos, std::ios_base::seekdir dir);
     size_t read(uint8_t *buf, size_t length);
     size_t write(uint8_t *buf, size_t length);
 
@@ -46,5 +37,3 @@ protected:
 
 };
 };
-
-#endif //LIBXENON_FILE_STREAM_H

@@ -1,11 +1,23 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#ifndef LIBXE_KEYS_H
-#define LIBXE_KEYS_H
+#pragma once
 
 #include "../types.h"
+
+// WINDOWS_EXPORT_ALL_SYMBOLS (used to auto-export libxe's symbols on MSVC)
+// only covers functions, not data, so these key tables need explicit
+// dllexport/dllimport to be visible to consumers like xetool.
+#if defined(_WIN32)
+#ifdef LIBXE_BUILD
+#define LIBXE_API __declspec(dllexport)
+#else
+#define LIBXE_API __declspec(dllimport)
+#endif
+#else
+#define LIBXE_API
+#endif
 
 namespace xe {
 namespace crypto {
@@ -28,16 +40,14 @@ struct XenonRsaPrivate2048 {
 };
 
 // a.k.a 1BL key
-extern const uint8_t cpuRomKey[16];
+extern LIBXE_API const uint8_t cpuRomKey[16];
 
 /*
  * Found in xamd.dll in SDK
  * Used for HV expansions with the magic "SIGC"
  */
-extern const uint8_t masterManufacturingKeyDevKit[0x390];
+extern LIBXE_API const uint8_t masterManufacturingKeyDevKit[0x390];
 
 };
 };
 };
-
-#endif //LIBXE_KEYS_H

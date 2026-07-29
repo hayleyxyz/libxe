@@ -1,5 +1,5 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
 #include "io.h"
@@ -12,7 +12,7 @@ namespace io {
 
 bool writeAllBytes(std::string &path, uint8_t *buffer, size_t length) {
     FileStream fs;
-    fs.open(path, FileStream::out);
+    fs.open(path, std::ios::out);
     if(!fs.isOpen()) return false;
 
     fs.write(buffer, length);

@@ -1,9 +1,8 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
-#ifndef LIBXENON_SFCX_IMAGE_H
-#define LIBXENON_SFCX_IMAGE_H
+#pragma once
 
 #include "../types.h"
 #include "../io/file_stream.h"
@@ -54,5 +53,3 @@ protected:
 
 }
 }
-
-#endif //LIBXENON_SFCX_IMAGE_H

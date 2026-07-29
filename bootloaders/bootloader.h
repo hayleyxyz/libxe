@@ -1,9 +1,8 @@
 //
-// Created by yuikonnu on 29/10/2018.
+// Created by github.com/hayleyxyz on 29/10/2018.
 //
 
-#ifndef LIBXENON_BOOTLOADER_H
-#define LIBXENON_BOOTLOADER_H
+#pragma once
 
 #include <cstdint>
 #include <string>
@@ -36,11 +35,9 @@ public:
     uint8_t *data = nullptr;
 
 protected:
-    off_t offset = -1;
+    size_t offset = -1;
     char magicStr[3];
 };
 
 };
 };
-
-#endif //LIBXENON_BOOTLOADER_H

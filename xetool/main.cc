@@ -1,12 +1,12 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#include <xetool/sfcx/extract_logical.h>
+#include "sfcx/sfcx_extract_logical.h"
 #include <iostream>
-#include <xetool/shadowboot/list.h>
-#include <xetool/shadowboot/extract.h>
-#include <xetool/sfcx/extract.h>
+#include "shadowboot/shadowboot_list.h"
+#include "shadowboot/shadowboot_extract.h"
+#include "sfcx/sfcx_extract.h"
 #include "application.h"
 #include "command_line_input.h"
 

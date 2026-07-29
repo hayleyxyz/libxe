@@ -1,10 +1,8 @@
 /*
-* Created by yuikonnu on 02/11/2018.
+* Created by github.com/hayleyxyz on 02/11/2018.
 */
 
-#ifndef LIBXE_SFCX_EXTRACT_H
-#define LIBXE_SFCX_EXTRACT_H
-
+#pragma once
 
 #include <xetool/command.h>
 #include "../../io/file_stream.h"
@@ -25,6 +23,3 @@ protected:
 
 };
 };
-
-
-#endif //LIBXE_SFCX_EXTRACT_H

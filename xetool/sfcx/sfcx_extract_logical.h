@@ -1,9 +1,8 @@
 /*
-* Created by yuikonnu on 31/10/2018.
+* Created by github.com/hayleyxyz on 31/10/2018.
 */
 
-#ifndef LIBXE_EXTRACT_LOGICAL_H
-#define LIBXE_EXTRACT_LOGICAL_H
+#pragma once
 
 #include "../command.h"
 
@@ -19,5 +18,3 @@ public:
 
 };
 };
-
-#endif //LIBXE_EXTRACT_LOGICAL_H

@@ -1,31 +1,29 @@
 //
-// Created by yuikonnu on 30/10/2018.
+// Created by github.com/hayleyxyz on 30/10/2018.
 //
 
-#ifndef LIBXENON_STREAM_H
-#define LIBXENON_STREAM_H
+#pragma once
 
 #include "../types.h"
 #include "../endian.h"
+#include <iostream>
 
 namespace xe {
 namespace io {
 
 class Stream {
 public:
-    enum seekdir {beg, cur, end};
-
     virtual ~Stream() { };
 
     virtual bool isOpen() = 0;
     virtual size_t length() = 0;
-    virtual off_t position() = 0;
+    virtual size_t position() = 0;
     virtual size_t read(uint8_t *buf, size_t length) = 0;
     virtual size_t write(uint8_t *buf, size_t length) = 0;
-    virtual off_t seek(off_t pos, seekdir dir) = 0;
+    virtual size_t seek(size_t pos, std::ios_base::seekdir dir) = 0;
 
-    off_t seek(off_t pos) {
-        return seek(pos, seekdir::beg);
+    size_t seek(size_t pos) {
+        return seek(pos, std::ios::beg);
     };
 
     template <typename T>
@@ -54,7 +52,3 @@ public:
 
 };
 };
-
-
-
-#endif //LIBXENON_STREAM_H
